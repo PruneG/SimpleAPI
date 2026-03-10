@@ -1,18 +1,12 @@
 # Là on importe les bibliothèques nécessaires pour créer une API avec Flask et pour se connecter à une base de données MySQL.
 from flask import Flask, jsonify
 import mysql.connector
+from flask import Flask, jsonify, request
 
-from flask import Flask, jsonify
-from flask import request
+# Ensuite, on importe la configuration de la base de données à partir du fichier config.py, qui contient les informations de connexion nécessaires pour accéder à la base de données MySQL.
+from config import db_config
 
 app = Flask(__name__)
-
-db_config = {
-    'host': "mysql-maxderam.alwaysdata.net",
-    'user': "maxderam_prune",
-    'password': "Prune59.",
-    'database': "maxderam_projectclothingv1 "
-}
 
 # Création de routes pour les afficher différents messages 
 @app.route ('/hello', methods=['GET'])
@@ -22,11 +16,6 @@ def hello():
 @app.route ('/hola', methods=['GET'])
 def hola():
     return jsonify({'message': 'Hola, MV!'})
-
-@app.route ('/bonjour', methods=['GET'])
-def bonjour():
-    return jsonify({'message': 'Bonjour, MV!'})
-
 
 # Connexion à la base de données avec la fonction mysql.connector.connect() en utilisant les paramètres de connexion fournis dans le dictionnaire db_config. 
 cnx = mysql.connector.connect(**db_config)
@@ -49,7 +38,6 @@ def get_articles_in_catalog():
 
 app.run(debug=True, port=5001)
 # ce code permet de lancer le serveur Flask en mode debug sur le port 5001.
-
 
 # Ensuite, on ajoute des routes pour ajouter des vêtements dans la base de données en utilisant une méthode HTTP
 # Ici, POST pour ajouter en utilisant des requêtes SQL. 
